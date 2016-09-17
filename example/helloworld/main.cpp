@@ -30,7 +30,7 @@ void runServer(const QString& portOrPath) {
 
         req->onEnd([req, res](){
             res->setStatusCode(qhttp::ESTATUS_OK); // status 200
-            res->addHeader("connection", "close"); // optional(default) header
+            res->addHeader("Connection", "close"); // optional(default) header
 
             int size = req->collectedData().size();
             auto message = [size]() -> QByteArray {
@@ -102,7 +102,7 @@ void runClient(QString url) {
         // just for fun! print headers:
         qDebug("\n[Headers:]");
         res->headers().forEach([](auto cit) {
-            qDebug("%s : %s", cit.key().constData(), cit.value().constData());
+            qDebug("%s: %s", cit.key().constData(), cit.value().constData());
         });
     });
 
