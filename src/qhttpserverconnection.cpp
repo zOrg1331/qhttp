@@ -99,10 +99,9 @@ QHttpConnectionPrivate::headerField(http_parser*, const char* at, size_t length)
     // insert the header we parsed previously
     // into the header map
     if ( !itempHeaderField.isEmpty() && !itempHeaderValue.isEmpty() ) {
-        // header names are always lower-cased
         ilastRequest->d_func()->iheaders.insert(
-                    itempHeaderField.toLower(),
-                    itempHeaderValue.toLower()
+                    itempHeaderField,
+                    itempHeaderValue
                     );
         // clear header value. this sets up a nice
         // feedback loop where the next time
@@ -142,8 +141,8 @@ QHttpConnectionPrivate::headersComplete(http_parser* parser) {
 
     // Insert last remaining header
     ilastRequest->d_func()->iheaders.insert(
-                itempHeaderField.toLower(),
-                itempHeaderValue.toLower()
+                itempHeaderField,
+                itempHeaderValue
                 );
 
     // set client information

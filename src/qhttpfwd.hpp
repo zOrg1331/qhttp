@@ -42,12 +42,16 @@ void for_each(Iterator first, Iterator last, Func&& f) {
 class THeaderHash : public QHash<QByteArray, QByteArray>
 {
 public:
-    /** checks for a header item, regardless of the case of the characters. */
+    /** checks for a header item. */
     bool has(const QByteArray& key) const {
-        return contains(key.toLower());
+        foreach ( QByteArray k, keys() ) {
+            if ( qstrnicmp(k.constData(), key.constData(), k.size()) == 0 )
+                return true;
+        }
+        return false;
     }
 
-    /** checks if a header has the specified value ignoring the case of the characters. */
+    /** checks if a header has the specified value. */
     bool keyHasValue(const QByteArray& key, const QByteArray& value) const {
         if ( !contains(key) )
             return false;
