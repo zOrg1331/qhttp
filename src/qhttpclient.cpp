@@ -94,7 +94,7 @@ QHttpClient::request(THttpMethod method, QUrl url,
             d->ireqHandler = reqHandler;
         else
             d->ireqHandler = [](QHttpRequest* req) ->void {
-                req->addHeader("connection", "close");
+                req->addHeader("Connection", "close");
                 req->end();
             };
     }

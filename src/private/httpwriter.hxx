@@ -79,7 +79,7 @@ public:
         if ( TBase::iheaders.keyHasValue("connection", "keep-alive") )
             ikeepAlive = true;
         else
-            TBase::iheaders.insert("connection", "close");
+	    TBase::iheaders.insert("Connection", "close");
 
         TImpl* me = static_cast<TImpl*>(this);
         me->prepareHeadersToWrite();
