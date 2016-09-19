@@ -33,6 +33,9 @@ public:
 
         if ( ilocalSocket )
             ilocalSocket->close();
+
+	lastWrittenData.clear();
+	lastReadData.clear();
     }
 
     void release() {
@@ -45,6 +48,9 @@ public:
 
         itcpSocket   = nullptr;
         ilocalSocket = nullptr;
+
+	lastWrittenData.clear();
+	lastReadData.clear();
     }
 
     void flush() {
@@ -78,17 +84,22 @@ public:
     }
 
     qint64 readRaw(char* buffer, int maxlen) {
+	qint64 len = 0;
         if ( itcpSocket )
-            return itcpSocket->read(buffer, maxlen);
+	    len = itcpSocket->read(buffer, maxlen);
 
         else if ( ilocalSocket )
-            return ilocalSocket->read(buffer, maxlen);
+	    len = ilocalSocket->read(buffer, maxlen);
 
-        return 0;
+	lastReadData.append(buffer, len);
+
+	return len;
     }
 
     void writeRaw(const QByteArray& data) {
-        if ( itcpSocket )
+	lastWrittenData.append(data);
+
+	if ( itcpSocket )
             itcpSocket->write(data);
 
         else if ( ilocalSocket )
@@ -117,6 +128,8 @@ public:
     TBackend      ibackendType = ETcpSocket;
     QTcpSocket*   itcpSocket   = nullptr;
     QLocalSocket* ilocalSocket = nullptr;
+    QByteArray lastWrittenData;
+    QByteArray lastReadData;
 }; // class QSocket
 
 ///////////////////////////////////////////////////////////////////////////////

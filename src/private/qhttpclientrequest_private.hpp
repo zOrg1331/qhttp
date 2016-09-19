@@ -39,6 +39,8 @@ public:
         isocket.ibackendType  = iclient->backendType();
         isocket.itcpSocket    = iclient->tcpSocket();
         isocket.ilocalSocket  = iclient->localSocket();
+	isocket.lastReadData.clear();
+	isocket.lastWrittenData.clear();
     }
 
     QByteArray  makeTitle();

@@ -62,7 +62,10 @@ public:
     }
 
     void initializeSocket() {
-        if ( isocket.isOpen() ) {
+	isocket.lastReadData.clear();
+	isocket.lastWrittenData.clear();
+
+	if ( isocket.isOpen() ) {
             // no need to reconnect. do nothing and simply return
             if ( ikeepAlive )
                 return;

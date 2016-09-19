@@ -164,6 +164,17 @@ QHttpClient::onResponseReady(QHttpResponse *res) {
     emit newResponse(res);
 }
 
+const QByteArray&
+QHttpClient::replyData() {
+    Q_D(QHttpClient);
+    return d->isocket.lastReadData;
+}
+
+const QByteArray&
+QHttpClient::requestData() {
+    return d_ptr->ilastRequest->d_ptr->isocket.lastWrittenData;
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 
 // if server closes the connection, ends the response or by any other reason
