@@ -99,6 +99,12 @@ void runClient(QString url) {
             qApp->quit();
         });
 
+        qDebug("[raw request:]");
+        qDebug().noquote() << res->connection()->requestData();
+
+        qDebug("[raw reply:]");
+        qDebug().noquote() << res->connection()->replyData();
+
         // just for fun! print headers:
         qDebug("\n[Headers:]");
         res->headers().forEach([](auto cit) {
